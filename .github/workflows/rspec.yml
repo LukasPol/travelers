@@ -34,8 +34,8 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          RAILS_ENV: test
         run: |
           bundle exec rails db:create
           bundle exec rails db:migrate
           bundle exec rake
+          rubocop
