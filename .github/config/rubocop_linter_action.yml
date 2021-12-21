@@ -1,0 +1,5 @@
+rubocop_extensions:
+  - 'rubocop-rails'
+  - 'rubocop-performance': '1.5.1'
+  - 'rubocop-rspec': '2.6.0'
+  - 'rubocop-packaging'
