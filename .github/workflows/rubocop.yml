@@ -1,21 +1,24 @@
 name: Rubocop
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-  rubocop:
-    name: runner / rubocop
+  tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 3
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-      - name: rubocop
-        uses: reviewdog/action-rubocop@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-rspec:gemfile
-          reporter: github-pr-review
+          bundler-cache: true
+      - name: Build and test with Rake
+        env:
+          RAILS_ENV: development
+        run: |
+          bundle exec rubocop
